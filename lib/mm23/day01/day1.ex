@@ -9,7 +9,7 @@ defmodule MM23.Day1 do
 
   """
   def part1 do
-    File.read!("lib/mm23/day1/input.txt")
+    File.read!("lib/2023/day1/input.txt")
     |> String.split("\n", trim: true)
     |> Enum.map(fn line ->
       ints =
@@ -33,7 +33,7 @@ defmodule MM23.Day1 do
 
   """
   def part2 do
-    File.read!("lib/mm23/day1/input.txt")
+    File.read!("lib/2023/day1/input.txt")
     |> String.split("\n", trim: true)
     |> Enum.map(fn line ->
       ints =

@@ -27,3 +27,6 @@ aoc-*.tar
 
 # Direnv
 /.direnv/
+
+# AoC session token
+session_token.txt
