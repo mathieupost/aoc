@@ -1,4 +1,4 @@
 defmodule AocTest do
   use ExUnit.Case
-  doctest MM23.Day7
+  doctest MM23.Day9
 end
