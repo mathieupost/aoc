@@ -26,7 +26,8 @@ defmodule MM23.Day8 do
     |> find("AAA", String.to_charlist(instructions))
   end
 
-  def find(_, "ZZZ", _) do
+  # Ends with "Z"
+  def find(_, _curr = <<_a, _b, ?Z>>, _) do
     0
   end
 
@@ -47,4 +48,54 @@ defmodule MM23.Day8 do
       end
     end)
   end
+
+  @doc """
+  Part 2
+
+  ## Examples
+
+      iex> MM23.Day8.part2("lib/mm23/day08/example.txt")
+      2
+
+      iex> MM23.Day8.part2("lib/mm23/day08/example2.txt")
+      6
+
+      iex> MM23.Day8.part2("lib/mm23/day08/example3.txt")
+      6
+
+      iex> MM23.Day8.part2("lib/mm23/day08/input.txt")
+      11678319315857
+
+  """
+  def part2(input) do
+    [instructions | nodes_str] =
+      File.read!(input)
+      |> String.split("\n", trim: true)
+
+    nodes =
+      nodes_str
+      |> Enum.map(&Regex.scan(~r/[1-9A-Z]+/, &1))
+      |> Enum.map(&List.flatten(&1))
+      |> Enum.reduce(%{}, fn [key, l, r], map -> Map.put(map, key, [l, r]) end)
+
+    start_nodes =
+      nodes
+      |> Map.keys()
+      |> Enum.filter(fn _key = <<_, _, c>> -> c == ?A end)
+
+    loop_lengths =
+      Enum.map(start_nodes, fn start_node ->
+        find(nodes, start_node, String.to_charlist(instructions))
+      end)
+
+    lcm(loop_lengths)
+  end
+
+  # Greatest common divisor
+  def gcd(a, 0), do: a
+  def gcd(a, b), do: gcd(b, rem(a, b))
+
+  # Least common multiple
+  def lcm(a, b), do: div(abs(a * b), gcd(a, b))
+  def lcm(list) when is_list(list), do: Enum.reduce(list, 1, &lcm/2)
 end
