@@ -23,7 +23,7 @@ defmodule MM23.Day8 do
     |> Enum.map(&Regex.scan(~r/[A-Z]+/, &1))
     |> Enum.map(&List.flatten(&1))
     |> Enum.reduce(%{}, fn [from, left, right], map -> Map.put(map, from, [left, right]) end)
-    |> find("AAA", String.to_charlist(instructions))
+    |> find("AAA", instructions)
   end
 
   # Ends with "Z"
@@ -37,16 +37,12 @@ defmodule MM23.Day8 do
   end
 
   def next(nodes, curr, instructions) do
-    [go | instructions] = instructions
+    [left, right] = Map.get(nodes, curr)
 
-    nodes
-    |> Map.get(curr)
-    |> then(fn [left, right] ->
-      case go do
-        ?L -> {left, instructions ++ [go]}
-        ?R -> {right, instructions ++ [go]}
-      end
-    end)
+    case instructions do
+      "L" <> instructions -> {left, instructions <> "L"}
+      "R" <> instructions -> {right, instructions <> "R"}
+    end
   end
 
   @doc """
@@ -85,7 +81,7 @@ defmodule MM23.Day8 do
 
     loop_lengths =
       Enum.map(start_nodes, fn start_node ->
-        find(nodes, start_node, String.to_charlist(instructions))
+        find(nodes, start_node, instructions)
       end)
 
     lcm(loop_lengths)
