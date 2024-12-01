@@ -46,7 +46,7 @@ defmodule MM23.Day12 do
       |> IO.inspect(label: "r")
 
     case r do
-      [_, _, {match, size}, {suffix, slen}] ->
+      [_, _, {match, _size}, {suffix, slen}] ->
         [{suffix + slen, tail}, {match + 1, groups}]
         |> Enum.map(fn {at, groups} ->
           {cut, springs} = String.split_at(springs, at)
@@ -76,7 +76,7 @@ defmodule MM23.Day12 do
       # 649862989626
 
   """
-  def part2(input, expand) do
+  def part2(input, _expand) do
     File.read!(input)
     |> String.split("\n", trim: true)
   end

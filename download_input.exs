@@ -2,8 +2,7 @@ date = Date.utc_today()
 
 url = "https://adventofcode.com/#{date.year}/day/#{date.day}/input"
 
-session_token = File.read!("session_token.txt")
-  |> String.trim()
+session_token = System.get_env("AOC_SESSION_TOKEN")
 
 headers = [
   {"Cookie",

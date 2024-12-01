@@ -76,7 +76,7 @@ defmodule MM23.Day13 do
       # 649862989626
 
   """
-  def part2(input, expand) do
+  def part2(input, _expand) do
     File.read!(input)
     |> String.split("\n", trim: true)
   end

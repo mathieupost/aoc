@@ -11,8 +11,6 @@
       let
         inherit (pkgs.lib) optional optionals;
         pkgs = import nixpkgs { inherit system; };
-
-        elixir = pkgs.beam.packages.erlang.elixir;
       in
       with pkgs;
       {
@@ -28,27 +26,6 @@
             CoreFoundation
             CoreServices
           ]);
-
-          PGHOST = "localhost";
-          PGPORT = "5432";
-          PGUSER = "postgres";
-          PGDATABASE = "postgres";
-          PGPASSWORD = "postgres";
-          PGSSLMODE = "disable";
-
-          shellHook = ''
-            export PGDATA="$PWD/.direnv/pgdata"
-            OLD_PGUSER=$PGUSER
-            export PGUSER=
-            [ ! -d $PGDATA ] &&
-              echo "========== CREATING LOCAL DATABASE ==========" && \
-              initdb && \
-              pg_ctl -o "-p $PGPORT -k $PGDATA" start && \
-              createuser -s $OLD_PGUSER && \
-              pg_ctl stop && \
-              export PGUSER=$OLD_PGUSER
-              echo "========== DONE =========="
-          '';
         };
       }
     );
