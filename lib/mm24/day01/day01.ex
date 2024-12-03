@@ -1,4 +1,4 @@
-defmodule MM24.Day1 do
+defmodule MM24.Day01 do
   @doc """
   Part 1
 
